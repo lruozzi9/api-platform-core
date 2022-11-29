@@ -15,7 +15,7 @@ namespace ApiPlatform\Core\Tests\Behat;
 
 use ApiPlatform\Elasticsearch\Metadata\Document\DocumentMetadata;
 use Behat\Behat\Context\Context;
-use Elasticsearch\Client;
+use Elastic\Elasticsearch\Client;
 use Symfony\Component\Finder\Finder;
 
 /**

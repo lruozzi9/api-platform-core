@@ -20,8 +20,8 @@ use ApiPlatform\Elasticsearch\State\ItemProvider;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\Foo;
 use ApiPlatform\Tests\ProphecyTrait;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Client;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -85,7 +85,7 @@ final class ItemProviderTest extends TestCase
         $documentMetadataFactoryProphecy->create(Foo::class)->willReturn(new DocumentMetadata('foo'))->shouldBeCalled();
 
         $clientProphecy = $this->prophesize(Client::class);
-        $clientProphecy->get(['index' => 'foo', 'id' => '404'])->willThrow(new Missing404Exception())->shouldBeCalled();
+        $clientProphecy->get(['index' => 'foo', 'id' => '404'])->willThrow(new ClientResponseException())->shouldBeCalled();
 
         $itemDataProvider = new ItemProvider($clientProphecy->reveal(), $documentMetadataFactoryProphecy->reveal(), $this->prophesize(DenormalizerInterface::class)->reveal());
 

@@ -24,9 +24,9 @@ use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInter
 use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\Foo;
 use ApiPlatform\Tests\ProphecyTrait;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
-use Elasticsearch\Namespaces\CatNamespace;
+use Elastic\Elasticsearch\Endpoints\Cat;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Client;
 use PHPUnit\Framework\TestCase;
 
 class CatDocumentMetadataFactoryTest extends TestCase
@@ -55,7 +55,7 @@ class CatDocumentMetadataFactoryTest extends TestCase
         $resourceMetadataFactory = $this->prophesize(ResourceMetadataCollectionFactoryInterface::class);
         $resourceMetadataFactory->create(Foo::class)->willReturn($resourceMetadata)->shouldBeCalled();
 
-        $catNamespaceProphecy = $this->prophesize(CatNamespace::class);
+        $catNamespaceProphecy = $this->prophesize(Cat::class);
         $catNamespaceProphecy->indices(['index' => 'foo'])
             ->willReturn([[
                 'health' => 'yellow',
@@ -127,7 +127,7 @@ class CatDocumentMetadataFactoryTest extends TestCase
         $resourceMetadataFactory->create(Foo::class)->willReturn($resourceMetadata)->shouldBeCalled();
 
         $catNamespaceProphecy = $this->prophesize(CatNamespace::class);
-        $catNamespaceProphecy->indices(['index' => 'foo'])->willThrow(new Missing404Exception())->shouldBeCalled();
+        $catNamespaceProphecy->indices(['index' => 'foo'])->willThrow(new ClientResponseException())->shouldBeCalled();
 
         $clientProphecy = $this->prophesize(Client::class);
         $clientProphecy->cat()->willReturn($catNamespaceProphecy)->shouldBeCalled();

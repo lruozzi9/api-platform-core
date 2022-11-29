@@ -32,7 +32,7 @@ use ApiPlatform\Tests\Fixtures\TestBundle\Entity\Dummy;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\DummyCar;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\DummyCarColor;
 use ApiPlatform\Tests\Fixtures\TestBundle\Entity\Foo;
-use Elasticsearch\Client;
+use Elastic\Elasticsearch\Client;
 use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
