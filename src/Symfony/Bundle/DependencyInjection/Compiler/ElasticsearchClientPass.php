@@ -42,7 +42,6 @@ final class ElasticsearchClientPass implements CompilerPassInterface
 
         if ($container->has('logger')) {
             $clientConfiguration['logger'] = new Reference('logger');
-            $clientConfiguration['tracer'] = new Reference('logger');
         }
 
         $clientDefinition = $container->getDefinition('api_platform.elasticsearch.client');
