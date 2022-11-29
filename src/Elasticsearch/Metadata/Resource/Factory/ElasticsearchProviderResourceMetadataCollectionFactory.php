@@ -19,9 +19,9 @@ use ApiPlatform\Metadata\CollectionOperationInterface;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
 use ApiPlatform\Util\Inflector;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
-use Elasticsearch\Common\Exceptions\NoNodesAvailableException;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Transport\Exception\NoNodeAvailableException;
 
 final class ElasticsearchProviderResourceMetadataCollectionFactory implements ResourceMetadataCollectionFactoryInterface
 {
@@ -96,9 +96,9 @@ final class ElasticsearchProviderResourceMetadataCollectionFactory implements Re
             $this->client->cat()->indices(['index' => $index]);
 
             return true;
-        } catch (Missing404Exception $e) {
+        } catch (ClientResponseException $e) {
             return false;
-        } catch (NoNodesAvailableException) {
+        } catch (NoNodeAvailableException) {
             return false;
         }
     }

@@ -20,7 +20,7 @@ use ApiPlatform\Elasticsearch\Util\ElasticsearchVersion;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\Pagination\Pagination;
 use ApiPlatform\State\ProviderInterface;
-use Elasticsearch\Client;
+use Elastic\Elasticsearch\Client;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 /**
@@ -87,7 +87,7 @@ final class CollectionProvider implements ProviderInterface
 
         return new Paginator(
             $this->denormalizer,
-            $documents,
+            $documents->asArray(),
             $resourceClass,
             $limit,
             $offset,

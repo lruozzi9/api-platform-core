@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace ApiPlatform\Elasticsearch\Util;
 
-use Elasticsearch\Client;
+use Elastic\Elasticsearch\Client;
 
 class ElasticsearchVersion
 {

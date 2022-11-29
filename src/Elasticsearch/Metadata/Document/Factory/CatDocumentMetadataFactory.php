@@ -20,8 +20,8 @@ use ApiPlatform\Elasticsearch\Metadata\Document\DocumentMetadata;
 use ApiPlatform\Metadata\Resource\Factory\ResourceMetadataCollectionFactoryInterface;
 use ApiPlatform\Metadata\Resource\ResourceMetadataCollection;
 use ApiPlatform\Util\Inflector;
-use Elasticsearch\Client;
-use Elasticsearch\Common\Exceptions\Missing404Exception;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
 
 /**
  * Creates document's metadata using indices from the cat APIs.
@@ -85,7 +85,7 @@ final class CatDocumentMetadataFactory implements DocumentMetadataFactoryInterfa
 
         try {
             $this->client->cat()->indices(['index' => $index]);
-        } catch (Missing404Exception $e) {
+        } catch (ClientResponseException $e) {
             return $this->handleNotFound($documentMetadata, $resourceClass);
         }
 
