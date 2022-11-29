@@ -625,6 +625,9 @@ jobs:
         php:
           - '8.0'
           - '8.1'
+        elasticsearch:
+          - '7.6.0'
+          - '8.5.0'
       fail-fast: false
     env:
       APP_ENV: elasticsearch
@@ -640,7 +643,7 @@ jobs:
       - name: Runs Elasticsearch
         uses: elastic/elastic-github-actions/elasticsearch@master
         with:
-          stack-version: '7.6.0'
+          stack-version: ${{ matrix.elasticsearch }}
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
